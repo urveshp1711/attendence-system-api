@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "OnQ/nq2gA8/jhmphLas0phb8pK/dsjW5tmj5+CEjkVqbry2syXqEwyB3WgSJzFWpkNl7oshemPcNklptZ94YQw==",
+  "dgSpecHash": "aVmEV/t5/vXfDxgIpHixZXR5zBMPVPVqu9IAiPCkBLeiwqG5DInYDMZKoklPrNA+uBsoeYbYyK0pyQE3quE/tQ==",
   "success": true,
-  "projectFilePath": "D:\\urvesh\\favourite\\PROJ\\p-a-s\\api-attendance-system\\api-attendance-system\\api-attendance-system.csproj",
+  "projectFilePath": "D:\\urvesh\\favourite\\PROJ\\p-a-s\\attendence-system-api\\api-attendance-system\\api-attendance-system.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\admin\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "C:\\Users\\admin\\.nuget\\packages\\microsoft.netcore.platforms\\2.0.0\\microsoft.netcore.platforms.2.0.0.nupkg.sha512",

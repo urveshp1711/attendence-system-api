@@ -821,11 +821,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\urvesh\\favourite\\PROJ\\p-a-s\\api-attendance-system\\api-attendance-system\\api-attendance-system.csproj",
+      "projectUniqueName": "D:\\urvesh\\favourite\\PROJ\\p-a-s\\attendence-system-api\\api-attendance-system\\api-attendance-system.csproj",
       "projectName": "api-attendance-system",
-      "projectPath": "D:\\urvesh\\favourite\\PROJ\\p-a-s\\api-attendance-system\\api-attendance-system\\api-attendance-system.csproj",
+      "projectPath": "D:\\urvesh\\favourite\\PROJ\\p-a-s\\attendence-system-api\\api-attendance-system\\api-attendance-system.csproj",
       "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-      "outputPath": "D:\\urvesh\\favourite\\PROJ\\p-a-s\\api-attendance-system\\api-attendance-system\\obj\\",
+      "outputPath": "D:\\urvesh\\favourite\\PROJ\\p-a-s\\attendence-system-api\\api-attendance-system\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
