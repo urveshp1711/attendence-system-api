@@ -1,24 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MySql.Data.MySqlClient;
-using System.Data;
-using System.Data.Common;
+using UAS.Business;
+using UAS.Dependancies.Business;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace api_attendance_system.Controllers
 {
-    public class UserInfo
-    {
-        public string? usercode { get; set; }
-        public string? password { get; set; }
-    }
-
-
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
-        const string connectionString = "Server=localhost;Database=urja_system;Uid=root;Pwd=admin123;";
+        private readonly IUsers _users;
+        public UserController(IUsers users)
+        {
+            _users = users;
+        }
 
         // GET: api/<UserController>
         [HttpGet]
@@ -37,20 +33,10 @@ namespace api_attendance_system.Controllers
         // POST api/<UserController>
         [HttpPost]
         [Route("validateUser")]
-        public void Post([FromBody] UserInfo body)
+        public bool Post([FromBody] dynamic body)
         {
-            using (var connection = new MySqlConnection(connectionString))
-            {
-                using (MySqlCommand cmd = new MySqlCommand("validateUser", connection))
-                {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@usercode", body.usercode);
-                    cmd.Parameters.AddWithValue("@pass", body.password);
+            return _users.validateUser("1043", "051050054053");
 
-                    connection.Open();
-                    var res = cmd.ExecuteScalar();
-                }
-            }
         }
 
         // PUT api/<UserController>/5
@@ -63,28 +49,6 @@ namespace api_attendance_system.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-        }
-
-        private bool IsAvailable(MySqlConnection connection)
-        {
-            var result = false;
-
-            try
-            {
-                if (connection != null)
-                {
-                    result = connection.Ping();
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Ping exception: " + e.Message);
-            }
-
-            if (connection != null)
-                return result && connection.State == System.Data.ConnectionState.Open;
-            else
-                return false;
         }
     }
 }
