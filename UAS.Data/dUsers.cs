@@ -1,4 +1,4 @@
-﻿using MySql.Data.MySqlClient;
+﻿//using MySql.Data.MySqlClient;
 using System.Data;
 using UAS.Database;
 using UAS.Dependancies.Data;
@@ -8,26 +8,29 @@ namespace UAS.Data
 {
     public class dUsers : IdUsers
     {
-        IMySQLHelper _mySQLHelper;
-        dUsers(IMySQLHelper mySQLHelper)
+        private readonly IMySQLHelper _mySqlHelper;
+        public dUsers(IMySQLHelper mySqlHelper)
         {
-            _mySQLHelper = mySQLHelper;
+            _mySqlHelper = mySqlHelper;
         }
 
         public bool validateUser(string userName, string password)
         {
             try
             {
-                MySqlParameter pUserName = new MySqlParameter();
-                pUserName.ParameterName = "username";
-                pUserName.Value = userName.ToString();
+                //MySqlParameter pUserName = new MySqlParameter();
+                //pUserName.ParameterName = "username";
+                //pUserName.Value = userName.ToString();
 
-                MySqlParameter pPassword = new MySqlParameter();
-                pPassword.ParameterName = "password";
-                pPassword.Value = password.ToString();
+                //MySqlParameter pPassword = new MySqlParameter();
+                //pPassword.ParameterName = "password";
+                //pPassword.Value = password.ToString();
 
-                int res = (int)_mySQLHelper.ExecuteNonQuery([pUserName, pPassword], "validateUser");
-                return res == 1;
+                _mySqlHelper.AddMySQLParameter("@userName", userName);
+                _mySqlHelper.AddMySQLParameter("@pass", password);
+
+                long res = (long)_mySqlHelper.ExecuteScalar("validateUser", []);
+                return res.ToString() == "1";
 
             }
             catch (Exception)

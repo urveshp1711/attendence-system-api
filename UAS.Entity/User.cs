@@ -1,15 +1,9 @@
 ﻿namespace UAS.Entity
 {
-   
-    //public class EntityUser
-    //{
-    //    public string? userCode { get; set; }
-    //    public string? password { get; set; }
-    //}
-    public class CommandResult
+    public class RQ_ValidateUser
     {
-        public bool flag { get; set; }
-        public long errorCode { get; set; }
-        public string? errorMessage { get; set; }
+        public required string userCode { get; set; }
+        public required string password { get; set; }
     }
+   
 }

@@ -17,10 +17,10 @@ namespace UAS.Database
         private DateTime _startTime;
         private DateTime _endTime;
         private MySqlCommand? _sqlCommand;
+        private List<MySqlParameter> _sqlParameterList = new List<MySqlParameter>();
 
-        MySQLHelper(string dbConnString)
+        public MySQLHelper()
         {
-            _dbConnString = dbConnString;
         }
 
         public bool GetDBConnectionStatus(bool prevConnState)
@@ -70,8 +70,8 @@ namespace UAS.Database
                     _sqlTransactionID = _sqlTransactionID + 1;
                     _isInTransaction = true;
 
-                    _sqlConnection.Open();
-                    _sqlTransaction = _sqlConnection.BeginTransaction();
+                    //_sqlConnection.Open();
+                    //_sqlTransaction = _sqlConnection.BeginTransaction();
 
                     l_lng_BeginTrans = _sqlTransactionID;
                 }
@@ -124,56 +124,6 @@ namespace UAS.Database
                         _sqlConnection.Close();
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public int UpdateObjectLite(object objBo, string tableName)
-        {
-            Type type = default(Type);
-            PropertyInfo[] propertiesInfo = null;
-            string procedureName = GetProcedureName(tableName, Enums.OperationType.Update);
-            int i = 0;
-            var para = default(MySqlParameter);
-
-            type = objBo.GetType();
-            propertiesInfo = type.GetProperties();
-            var parameters = new MySqlParameter[propertiesInfo.Length + 1];
-
-            try
-            {
-                for (i = 0; i <= propertiesInfo.Length - 1; i++)
-                {
-                    var info = propertiesInfo[i];
-                    para = new MySqlParameter { ParameterName = string.Format("@{0}", info.Name) };
-
-                    if (type.GetProperty(propertiesInfo[i].Name).PropertyType.ToString() == "System.DateTime" && propertiesInfo[i].Name == "CreatedDate")
-                    {
-                        para.Value = type.GetProperty(info.Name).GetValue(objBo, null);
-                        var testVal = para.Value;
-                        if (testVal.ToString().Contains("12:00:00 AM"))
-                        {
-                            para.Value = DBNull.Value;
-                        }
-                    }
-                    else
-                    {
-                        para.Value = type.GetProperty(info.Name).GetValue(objBo, null);
-                    }
-                    parameters[i] = para;
-                }
-                para = new MySqlParameter
-                {
-                    ParameterName = "@Flag",
-                    Value = 0,
-                    Direction = ParameterDirection.Output
-                };
-                parameters[i] = para;
-                i = Convert.ToInt32(ExecuteNonQuery(parameters, procedureName));
-                return i;
             }
             catch (Exception ex)
             {
@@ -452,10 +402,12 @@ namespace UAS.Database
             }
         }
 
-        public object ReturnScalarValue(MySqlParameter[] parameters, string cmdText)
+        public object ExecuteScalar( string cmdText, List<MySqlParameter> parameters)
         {
             try
             {
+                if (parameters.Count == 0) parameters = _sqlParameterList;
+
                 using (_sqlConnection = new MySqlConnection())
                 {
                     _sqlConnection.ConnectionString = _dbConnString;
@@ -464,7 +416,7 @@ namespace UAS.Database
                     using (MySqlCommand cmd = new MySqlCommand(cmdText, _sqlConnection))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddRange(parameters);
+                        cmd.Parameters.AddRange(parameters.ToArray());
                         return cmd.ExecuteScalar();
                     }
                 }
@@ -475,8 +427,9 @@ namespace UAS.Database
             }
         }
 
-        public object ExecuteNonQuery(MySqlParameter[] paras, string cmdText)
+        public object ExecuteNonQuery(string cmdText, List<MySqlParameter> paras)
         {
+            if (paras.Count == 0) paras = _sqlParameterList;
 
             _sqlConnection = new MySqlConnection(_dbConnString);
             int ReturnID = 0;
@@ -484,7 +437,7 @@ namespace UAS.Database
 
             try
             {
-                l_sql_Cmd = CreateCommandObject(paras, cmdText);
+                l_sql_Cmd = CreateCommandObject(paras.ToArray(), cmdText);
                 ReturnID = l_sql_Cmd.ExecuteNonQuery();
             }
             catch (Exception ex)
@@ -606,6 +559,15 @@ namespace UAS.Database
         public DataSet GetDataTableByID(string storedProcedureName, string sqlParameterName, int sqlParmeterValue)
         {
             throw new NotImplementedException();
+        }
+
+        public void AddMySQLParameter(string pName, string pValue)
+        {
+            MySqlParameter param = new MySqlParameter();
+            param.ParameterName = pName;
+            param.Value = pValue;
+
+            _sqlParameterList.Add(new MySqlParameter(pName, pValue));
         }
     }
 

@@ -13,10 +13,9 @@ namespace UAS.Dependancies.Database
         bool GetDBConnectionStatus(bool prevConnState);
         DataSet GetDataTableByID(string storedProcedureName, string sqlParameterName, int sqlParmeterValue);
         long BeginTrans();
-        object ExecuteNonQuery(MySqlParameter[] paras, string cmdText);
+        object ExecuteNonQuery(string cmdText, List<MySqlParameter> paras);
         void CommitTrans(long transID);
         void RollBackTrans(long transID);
-        int UpdateObjectLite(object objBo, string tableName);
         DataSet ReturnWithDataSet(MySqlParameter para, string cmdText);
         DataSet ReturnWithDataSet(MySqlParameter[] paras, string cmdText);
         DataTable ReturnWithDataTable(MySqlParameter[] paras, string cmdText);
@@ -29,6 +28,8 @@ namespace UAS.Dependancies.Database
         //string GetProcedureName(string table, Enums.OperationType operation);
         DataSet return_DataSet(string str_SqlCommand);
         DataTable return_DataTable(string str_SqlCommand);
-        object ReturnScalarValue(MySqlParameter[] parameters, string cmdText);
+        object ExecuteScalar(string cmdText, List<MySqlParameter> parameters);
+
+        void AddMySQLParameter(string pName, string pValue);
     }
 }

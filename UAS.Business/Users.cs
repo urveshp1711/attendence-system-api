@@ -8,9 +8,9 @@ namespace UAS.Business
     public class Users : IUsers
     {
         private readonly IdUsers _dUsers;
-        public Users(IdUsers dUsers)
+        public Users(IdUsers users)
         {
-            _dUsers = dUsers;
+            _dUsers = users;
         }
 
         public bool validateUser(string userName, string password)

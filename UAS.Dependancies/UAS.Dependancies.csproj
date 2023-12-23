@@ -10,4 +10,8 @@
     <PackageReference Include="MySql.Data" Version="6.10.9" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\UAS.Entity\UAS.Entity.csproj" />
+  </ItemGroup>
+
 </Project>

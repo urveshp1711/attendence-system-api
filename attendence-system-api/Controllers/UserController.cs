@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using UAS.Business;
 using UAS.Dependancies.Business;
+using UAS.Entity;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -33,9 +34,9 @@ namespace api_attendance_system.Controllers
         // POST api/<UserController>
         [HttpPost]
         [Route("validateUser")]
-        public bool Post([FromBody] dynamic body)
+        public bool Post([FromBody] RQ_ValidateUser request)
         {
-            return _users.validateUser("1043", "051050054053");
+            return _users.validateUser(request.userCode, request.password);
 
         }
 

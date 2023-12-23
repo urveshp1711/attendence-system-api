@@ -160,10 +160,16 @@
       },
       "UAS.Dependancies/1.0.0": {
         "dependencies": {
-          "MySql.Data": "6.10.9"
+          "MySql.Data": "6.10.9",
+          "UAS.Entity": "1.0.0"
         },
         "runtime": {
           "UAS.Dependancies.dll": {}
+        }
+      },
+      "UAS.Entity/1.0.0": {
+        "runtime": {
+          "UAS.Entity.dll": {}
         }
       }
     }
@@ -288,6 +294,11 @@
       "sha512": ""
     },
     "UAS.Dependancies/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "UAS.Entity/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

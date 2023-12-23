@@ -8,7 +8,8 @@
     ".NETCoreApp,Version=v8.0": {
       "UAS.Dependancies/1.0.0": {
         "dependencies": {
-          "MySql.Data": "6.10.9"
+          "MySql.Data": "6.10.9",
+          "UAS.Entity": "1.0.0"
         },
         "runtime": {
           "UAS.Dependancies.dll": {}
@@ -81,6 +82,11 @@
         "dependencies": {
           "Microsoft.NETCore.Platforms": "2.0.0"
         }
+      },
+      "UAS.Entity/1.0.0": {
+        "runtime": {
+          "UAS.Entity.dll": {}
+        }
       }
     }
   },
@@ -145,6 +151,11 @@
       "sha512": "sha512-6JX7ZdaceBiLKLkYt8zJcp4xTJd1uYyXXEkPw6mnlUIjh1gZPIVKPtRXPmY5kLf6DwZmf5YLwR3QUrRonl7l0A==",
       "path": "system.text.encoding.codepages/4.4.0",
       "hashPath": "system.text.encoding.codepages.4.4.0.nupkg.sha512"
+    },
+    "UAS.Entity/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     }
   }
 }
