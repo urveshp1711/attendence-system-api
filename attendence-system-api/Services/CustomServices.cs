@@ -1,4 +1,5 @@
-﻿using UAS.Business;
+﻿using api_attendance_system.Handlers;
+using UAS.Business;
 using UAS.Data;
 using UAS.Database;
 using UAS.Dependancies.Business;
@@ -12,6 +13,7 @@ namespace api_attendance_system.Services
     {
         public static IServiceCollection AddDependanciesSingletone(this IServiceCollection services)
         {
+            services.AddSingleton<IJwtHandler, JwtHandler>();
             return services;
         }
 

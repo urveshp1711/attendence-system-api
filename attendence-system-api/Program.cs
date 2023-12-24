@@ -1,6 +1,10 @@
 using api_attendance_system.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 {
+    IConfiguration Configuration;
     var builder = WebApplication.CreateBuilder(args);
 
     //Add Custom Dependancies
@@ -9,6 +13,24 @@ using api_attendance_system.Services;
     builder.Services.AddDependanciesTransient();
 
     builder.Services.AddControllers();
+
+    if (builder.Environment.IsDevelopment())
+    {
+        var builder1 = new ConfigurationBuilder()
+                   .AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true)
+                   .AddEnvironmentVariables();
+        Configuration = builder1.Build();
+    }
+    else
+    {
+        var builder1 = new ConfigurationBuilder()
+                   .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                   .AddEnvironmentVariables();
+        Configuration = builder1.Build();
+    }
+
+    builder.Services.AddJWT(Configuration);
+    builder.Services.AddAuthorization();
 
 
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -26,6 +48,7 @@ using api_attendance_system.Services;
 
     app.UseHttpsRedirection();
 
+    app.UseAuthentication();
     app.UseAuthorization();
 
     app.MapControllers();
