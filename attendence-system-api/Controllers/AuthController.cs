@@ -1,66 +1,79 @@
-﻿using api_attendance_system.Services;
-using Microsoft.AspNetCore.Http;
+﻿using api_attendance_system.Handlers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System.Data;
-using System.Diagnostics.Metrics;
 using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
+using UAS.Dependancies.Business;
 using UAS.Entity;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace api_attendance_system.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     public class AuthController : ControllerBase
     {
-        [HttpPost]
-        [Route("generateTolen")]
-        public object Post([FromBody] RQ_ValidateUser request)
+        private readonly IUsers _users;
+        private readonly IJwtHandler _jwtHandler;
+        public AuthController(IUsers users, IJwtHandler jwtHandler)
         {
-            Console.WriteLine("");
+            _users = users;
+            _jwtHandler = jwtHandler;
+        }
 
-            // Define const Key this should be private secret key  stored in some safe place
-            string key = "401b09eab3c013d4ca54922bb802bec8fd5318192b0a75f201d8b3727429090fb337591abd3e44453b954555b7a0812e1081c39b740293f765eae731f5a65ed1";
+        // GET: api/<UserController>
+        [HttpGet]
+        [Authorize]
+        public IEnumerable<string> Get()
+        {
+            return new string[] { "value1", "value2" };
+        }
 
-            // Create Security key  using private key above:
-            // not that latest version of JWT using Microsoft namespace instead of System
-            var securityKey = new Microsoft
-                .IdentityModel.Tokens.SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
+        // GET api/<UserController>/5
+        [HttpGet("{id}")]
+        public string Get(int id)
+        {
+            return "value";
+        }
 
-            // Also note that securityKey length should be >256b
-            // so you have to make sure that your private key has a proper length
-            //
-            var credentials = new Microsoft.IdentityModel.Tokens.SigningCredentials
-                              (securityKey, SecurityAlgorithms.HmacSha256Signature);
+        // POST api/<UserController>
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("login")]
+        public RS_UserLogin Post([FromBody] RQ_UserLogin request)
+        {
+            bool isValidLogin = _users.validateUser(request.userCode, request.password);
+            RS_UserLogin res = new RS_UserLogin();
 
-            //  Finally create a Token
-            var header = new JwtHeader(credentials);
+            if (isValidLogin)
+            {
+                string token = _jwtHandler.GenerateJWT(request.userCode,"urveshp.1711.purohit@gmail.com", "Admin");
+                res.jwtToken = token;
+                res.userCode = request.userCode;
+                res.isSuccess = true;
+                return res;
+            }
+            else
+            {
+                res.jwtToken = string.Empty;
+                res.userCode = request.userCode;
+                res.isSuccess= false;
+                return res;
+            }
 
-            //Some PayLoad that contain information about the  customer
-            var payload = new JwtPayload
-           {
-               { "some ", "hello "},
-               { "scope", "http://dummy.com/"},
-           };
+        }
 
-            //
-            var secToken = new JwtSecurityToken(header, payload);
-            var handler = new JwtSecurityTokenHandler();
+        // PUT api/<UserController>/5
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody] string value)
+        {
+        }
 
-            // Token to String so you can use it in your client
-            var tokenString = handler.WriteToken(secToken);
-
-            Console.WriteLine(tokenString);
-            Console.WriteLine("Consume Token");
-
-
-            // And finally when  you received token from client
-            // you can  either validate it or try to  read
-           
-            return tokenString;
+        // DELETE api/<UserController>/5
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
         }
     }
 }
