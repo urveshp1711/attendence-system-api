@@ -1,3 +1,4 @@
+using api_attendance_system.Services;
 using UAS.Business;
 using UAS.Data;
 using UAS.Database;
@@ -11,10 +12,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-//builder.Services.AddScoped<IMySQLHelper, UAS.Database.MySQLHelper>();
-builder.Services.AddScoped<IUsers, Users>();
-builder.Services.AddScoped<IdUsers, dUsers>();
-builder.Services.AddScoped<IMySQLHelper, MySQLHelper>();
+//builder.Services.AddSingleton<RegisterServices>(serviceProvider =>
+//    new RegisterServices(serviceProvider.GetRequiredService<RegisterServices>()));
+
+builder.Services.AddTransient<IUsers, Users>();
+builder.Services.AddTransient<IdUsers, dUsers>();
+builder.Services.AddTransient<IMySQLHelper, MySQLHelper>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
