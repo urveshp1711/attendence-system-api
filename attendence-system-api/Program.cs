@@ -6,6 +6,7 @@ using System.Text;
 {
     IConfiguration Configuration;
     var builder = WebApplication.CreateBuilder(args);
+    var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
     //Add Custom Dependancies
     builder.Services.AddDependanciesSingletone();
@@ -32,6 +33,13 @@ using System.Text;
     builder.Services.AddJWT(Configuration);
     builder.Services.AddAuthorization();
 
+    builder.Services.AddCors(options =>
+    {
+        options.AddPolicy(name: MyAllowSpecificOrigins,
+        builder => builder.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader());
+    });
+
+
 
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
@@ -47,6 +55,7 @@ using System.Text;
     }
 
     app.UseHttpsRedirection();
+    app.UseCors(MyAllowSpecificOrigins);
 
     app.UseAuthentication();
     app.UseAuthorization();

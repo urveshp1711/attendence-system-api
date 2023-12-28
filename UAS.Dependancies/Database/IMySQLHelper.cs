@@ -18,7 +18,7 @@ namespace UAS.Dependancies.Database
         void RollBackTrans(long transID);
         DataSet ReturnWithDataSet(MySqlParameter para, string cmdText);
         DataSet ReturnWithDataSet(MySqlParameter[] paras, string cmdText);
-        DataTable ReturnWithDataTable(MySqlParameter[] paras, string cmdText);
+        DataTable ReturnWithDataTable(string cmdText, List<MySqlParameter> parameters);
         int Return_CUD_flag(MySqlParameter[] parameters, string procedure);
         int ExecuteNonQuery(string query, ref bool executionSucceeded);
         object ExecuteScalar(string query);

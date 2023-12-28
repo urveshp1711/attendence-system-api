@@ -308,8 +308,10 @@ namespace UAS.Database
             }
         }
 
-        public DataTable ReturnWithDataTable(MySqlParameter[] paras, string cmdText)
+        public DataTable ReturnWithDataTable(string cmdText, List<MySqlParameter> parameters)
         {
+            if (parameters.Count == 0) parameters = _sqlParameterList;
+
             if (_dbConnString == "")
             {
 
@@ -320,7 +322,7 @@ namespace UAS.Database
             MySqlDataAdapter l_sql_da = new MySqlDataAdapter();
             try
             {
-                l_sql_Cmd = CreateCommandObject(paras, cmdText);
+                l_sql_Cmd = CreateCommandObject(parameters.ToArray(), cmdText);
                 l_sql_da.SelectCommand = l_sql_Cmd;
                 l_sql_da.Fill(l_ds_Data);
             }

@@ -22,22 +22,6 @@ namespace api_attendance_system.Controllers
             _jwtHandler = jwtHandler;
         }
 
-        // GET: api/<UserController>
-        [HttpGet]
-        [Authorize]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<UserController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<UserController>
         [HttpPost]
         [AllowAnonymous]
         [Route("login")]
@@ -48,7 +32,7 @@ namespace api_attendance_system.Controllers
 
             if (isValidLogin)
             {
-                string token = _jwtHandler.GenerateJWT(request.userCode,"urveshp.1711.purohit@gmail.com", "Admin");
+                string token = _jwtHandler.GenerateJWT(request.userCode, "urveshp.1711.purohit@gmail.com", "Admin");
                 res.jwtToken = token;
                 res.userCode = request.userCode;
                 res.isSuccess = true;
@@ -58,22 +42,10 @@ namespace api_attendance_system.Controllers
             {
                 res.jwtToken = string.Empty;
                 res.userCode = request.userCode;
-                res.isSuccess= false;
+                res.isSuccess = false;
                 return res;
             }
 
-        }
-
-        // PUT api/<UserController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<UserController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }
