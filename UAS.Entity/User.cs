@@ -14,9 +14,22 @@ namespace UAS.Entity
         public string email { get; set; }
     }
 
+    public class RQ_UserProfile
+    {
+        public required string userCode { get; set; }
+        public required string profilePic{ get; set; }
+    }
+
+    public class RS_UserProfile
+    {
+        public string userCode { get; set; }
+        public string? profilePic { get; set; }
+    }
+
     public class RS_UserLogin
     {
         public string userCode { get; set; }
+        public string? profilePic { get; set; }
         public string jwtToken { get; set; }
         public bool isSuccess { get; set; }
     }
@@ -27,6 +40,7 @@ namespace UAS.Entity
         public string? userName { get; set; }
         public string? mobile { get; set; }
         public string? email { get; set; }
+        public string? profilePic { get; set; }
     }
 
 }

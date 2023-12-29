@@ -27,14 +27,15 @@ namespace api_attendance_system.Controllers
         [Route("login")]
         public RS_UserLogin Post([FromBody] RQ_UserLogin request)
         {
-            bool isValidLogin = _users.validateUser(request.userCode, request.password);
+            RS_UserProfile isValidLogin = _users.validateUser(request.userCode, request.password);
             RS_UserLogin res = new RS_UserLogin();
 
-            if (isValidLogin)
+            if (isValidLogin != null)
             {
                 string token = _jwtHandler.GenerateJWT(request.userCode, "urveshp.1711.purohit@gmail.com", "Admin");
                 res.jwtToken = token;
                 res.userCode = request.userCode;
+                res.profilePic = isValidLogin.profilePic;
                 res.isSuccess = true;
                 return res;
             }

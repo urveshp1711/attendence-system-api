@@ -31,8 +31,8 @@ namespace api_attendance_system.Controllers
         }
 
         // GET api/<UserController>/5
-        
-        [HttpGet("{userCode}")]        
+
+        [HttpGet("{userCode}")]
         public RS_UserInfo? Get(string userCode)
         {
             return _users.getUserInfo(userCode);
@@ -41,7 +41,17 @@ namespace api_attendance_system.Controllers
         // POST api/<UserController>
         [HttpPost]
         public void Post([FromBody] string value)
+
         {
+        }
+
+        // POST api/<UserController>
+        [HttpPost]
+        [Route("updateUserProfile")]
+        public bool updateUserProfile([FromBody] RQ_UserProfile value)
+        {
+            _users.updateUserInfo(value);
+            return true;
         }
 
         // PUT api/<UserController>/5

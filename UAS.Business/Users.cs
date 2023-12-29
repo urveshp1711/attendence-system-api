@@ -12,7 +12,7 @@ namespace UAS.Business
             _dUsers = users;
         }
 
-        public bool validateUser(string userName, string password)
+        public RS_UserProfile validateUser(string userName, string password)
         {
             return _dUsers.validateUser(userName, password);
         }
@@ -20,6 +20,11 @@ namespace UAS.Business
         public RS_UserInfo? getUserInfo(string userCode)
         {
             return _dUsers.getUserInfo(userCode);
+        }
+
+        public void updateUserInfo(RQ_UserProfile userProfile)
+        {
+            _dUsers.updateUserInfo(userProfile);
         }
     }
 }

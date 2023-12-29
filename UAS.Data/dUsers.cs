@@ -28,7 +28,8 @@ namespace UAS.Data
                         userCode = userCode,
                         userName = Convert.ToString(response.Rows[0]["ECODE"]),
                         mobile = Convert.ToString(response.Rows[0]["ENAME"]),
-                        email = Convert.ToString(response.Rows[0]["EMAIL"])
+                        email = Convert.ToString(response.Rows[0]["EMAIL"]),
+                        profilePic = Convert.ToString(response.Rows[0]["profilePic"])
                     };
                 }
                 else
@@ -43,23 +44,36 @@ namespace UAS.Data
             }
         }
 
-        public bool validateUser(string userName, string password)
+        public void updateUserInfo(RQ_UserProfile userInfo)
         {
             try
             {
-                //MySqlParameter pUserName = new MySqlParameter();
-                //pUserName.ParameterName = "username";
-                //pUserName.Value = userName.ToString();
+                _mySqlHelper.AddMySQLParameter("@userCode", userInfo.userCode);
+                _mySqlHelper.AddMySQLParameter("@profilePic", userInfo.profilePic);
 
-                //MySqlParameter pPassword = new MySqlParameter();
-                //pPassword.ParameterName = "password";
-                //pPassword.Value = password.ToString();
+                _mySqlHelper.ExecuteNonQuery("uas_updateUserProfile", []);
 
-                _mySqlHelper.AddMySQLParameter("@userName", userName);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public RS_UserProfile validateUser(string userCode, string password)
+        {
+            try
+            {
+                _mySqlHelper.AddMySQLParameter("@userCode", userCode);
                 _mySqlHelper.AddMySQLParameter("@pass", password);
 
-                long res = (long)_mySqlHelper.ExecuteScalar("validateUser", []);
-                return res.ToString() == "1";
+                DataTable response = _mySqlHelper.ReturnWithDataTable("validateUser", []);
+                return new RS_UserProfile()
+                {
+                    userCode = userCode,
+                    profilePic = Convert.ToString(response.Rows[0]["profilePic"])
+                };
 
             }
             catch (Exception)
