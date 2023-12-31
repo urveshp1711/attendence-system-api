@@ -54,6 +54,13 @@ namespace api_attendance_system.Controllers
             return true;
         }
 
+        [HttpPost]
+        [Route("userAttendance")]
+        public RS_UserAttendance userAttendance([FromBody] RQ_UserAttendance value)
+        {
+           return _users.doUserAttendance(value);
+        }
+
         // PUT api/<UserController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)

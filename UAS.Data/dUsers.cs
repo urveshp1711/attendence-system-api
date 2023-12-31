@@ -15,6 +15,35 @@ namespace UAS.Data
             _mySqlHelper = mySqlHelper;
         }
 
+        public RS_UserAttendance doUserAttendance(RQ_UserAttendance userAttendance)
+        {
+            try
+            {
+                _mySqlHelper.AddMySQLParameter("@userCode", userAttendance.userCode);
+                _mySqlHelper.AddMySQLParameter("@attendancePic", userAttendance.attendancePic);
+                _mySqlHelper.AddMySQLParameter("@latitude", userAttendance.latitude);
+                _mySqlHelper.AddMySQLParameter("@longitude", userAttendance.longitude);
+                _mySqlHelper.AddMySQLParameter("@address", userAttendance.address);
+                _mySqlHelper.AddMySQLParameter("@city", userAttendance.city);
+                _mySqlHelper.AddMySQLParameter("@country", userAttendance.country);
+                _mySqlHelper.AddMySQLParameter("@attendanceDateTime", userAttendance.attendanceDateTime);
+
+
+                _mySqlHelper.ExecuteNonQuery("uas_createAttendance", []);
+                return new RS_UserAttendance
+                {
+                    userCode = userAttendance.userCode,
+                    isSuccess = true
+                };
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public RS_UserInfo? getUserInfo(string userCode)
         {
             try

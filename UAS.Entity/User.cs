@@ -1,4 +1,7 @@
 ﻿#pragma warning disable CS8618
+using System.Diagnostics.Metrics;
+using System.Net;
+
 namespace UAS.Entity
 {
     public enum JWTType
@@ -17,7 +20,29 @@ namespace UAS.Entity
     public class RQ_UserProfile
     {
         public required string userCode { get; set; }
-        public required string profilePic{ get; set; }
+        public required string profilePic { get; set; }
+    }
+
+    public class RQ_UserAttendance
+    {
+        public required string userCode { get; set; }
+
+        public required string attendancePic { get; set; }
+
+        public required string latitude { get; set; }
+        public required string longitude { get; set; }
+
+        public string? address { get; set; }
+        public string? city { get; set; }
+        public string? country { get; set; }
+        public DateTime attendanceDateTime { get; set; }
+    }
+
+    public class RS_UserAttendance
+    {
+        public string userCode { get; set; }
+
+        public bool isSuccess { get; set; }
     }
 
     public class RS_UserProfile

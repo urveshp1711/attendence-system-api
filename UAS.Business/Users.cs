@@ -26,5 +26,10 @@ namespace UAS.Business
         {
             _dUsers.updateUserInfo(userProfile);
         }
+
+        public RS_UserAttendance doUserAttendance(RQ_UserAttendance userAttendance)
+        {
+            return _dUsers.doUserAttendance(userAttendance);
+        }
     }
 }

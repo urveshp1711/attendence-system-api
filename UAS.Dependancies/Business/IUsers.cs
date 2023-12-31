@@ -7,5 +7,6 @@ namespace UAS.Dependancies.Business
         RS_UserProfile validateUser(string userName, string password);
         RS_UserInfo? getUserInfo(string userCode);
         void updateUserInfo(RQ_UserProfile userProfile);
+        RS_UserAttendance doUserAttendance(RQ_UserAttendance userAttendance);
     }
 }

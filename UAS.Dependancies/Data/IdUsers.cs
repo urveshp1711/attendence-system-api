@@ -8,5 +8,6 @@ namespace UAS.Dependancies.Data
         RS_UserProfile validateUser(string userName, string password);
         RS_UserInfo? getUserInfo(string userCode);
         void updateUserInfo(RQ_UserProfile userInfo);
+        RS_UserAttendance doUserAttendance(RQ_UserAttendance userAttendance);
     }
 }

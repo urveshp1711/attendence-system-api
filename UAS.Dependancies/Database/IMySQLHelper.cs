@@ -30,6 +30,6 @@ namespace UAS.Dependancies.Database
         DataTable return_DataTable(string str_SqlCommand);
         object ExecuteScalar(string cmdText, List<MySqlParameter> parameters);
 
-        void AddMySQLParameter(string pName, string pValue);
+        void AddMySQLParameter(string pName, dynamic? pValue);
     }
 }

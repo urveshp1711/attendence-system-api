@@ -312,11 +312,9 @@ namespace UAS.Database
         {
             if (parameters.Count == 0) parameters = _sqlParameterList;
 
-            if (_dbConnString == "")
-            {
 
-                _sqlConnection = new MySqlConnection(_dbConnString);
-            }
+            _sqlConnection = new MySqlConnection(_dbConnString);
+
             DataTable l_ds_Data = new DataTable();
             MySqlCommand l_sql_Cmd = new MySqlCommand();
             MySqlDataAdapter l_sql_da = new MySqlDataAdapter();
@@ -336,6 +334,7 @@ namespace UAS.Database
                 if (_isInTransaction == false)
                 {
                     _sqlConnection.Close();
+                    _sqlParameterList.Clear();
                 }
             }
             return (l_ds_Data);
@@ -402,9 +401,16 @@ namespace UAS.Database
             {
                 throw ex;
             }
+            finally
+            {
+                if (_isInTransaction == false)
+                {
+                    _sqlParameterList.Clear();
+                }
+            }
         }
 
-        public object ExecuteScalar( string cmdText, List<MySqlParameter> parameters)
+        public object ExecuteScalar(string cmdText, List<MySqlParameter> parameters)
         {
             try
             {
@@ -426,6 +432,13 @@ namespace UAS.Database
             catch (Exception ex)
             {
                 throw ex;
+            }
+            finally
+            {
+                if (_isInTransaction == false)
+                {
+                    _sqlParameterList.Clear();
+                }
             }
         }
 
@@ -451,6 +464,7 @@ namespace UAS.Database
                 if (_isInTransaction == false)
                 {
                     _sqlConnection.Close();
+                    _sqlParameterList.Clear();
                 }
             }
 
@@ -563,7 +577,7 @@ namespace UAS.Database
             throw new NotImplementedException();
         }
 
-        public void AddMySQLParameter(string pName, string pValue)
+        public void AddMySQLParameter(string pName, dynamic? pValue)
         {
             MySqlParameter param = new MySqlParameter();
             param.ParameterName = pName;
