@@ -22,12 +22,10 @@ namespace api_attendance_system.Controllers
             _users = users;
         }
 
-
-        // GET: api/<UserController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<RS_UserInfo> Get()
         {
-            return new string[] { "value1", "value2" };
+            return _users.getAllUsers();
         }
 
         // GET api/<UserController>/5
@@ -36,6 +34,12 @@ namespace api_attendance_system.Controllers
         public RS_UserInfo? Get(string userCode)
         {
             return _users.getUserInfo(userCode);
+        }
+
+        [HttpGet("getAttendanceSummary/{userCode}")]
+        public IEnumerable<RS_UserAttendanceSummary>? getAttendanceSummary(string userCode)
+        {
+            return _users.getAttendanceSummary(userCode);
         }
 
         // POST api/<UserController>
@@ -58,7 +62,7 @@ namespace api_attendance_system.Controllers
         [Route("userAttendance")]
         public RS_UserAttendance userAttendance([FromBody] RQ_UserAttendance value)
         {
-           return _users.doUserAttendance(value);
+            return _users.doUserAttendance(value);
         }
 
         // PUT api/<UserController>/5

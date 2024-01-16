@@ -1,4 +1,5 @@
-﻿using UAS.Dependancies.Business;
+﻿using System.Collections.Generic;
+using UAS.Dependancies.Business;
 using UAS.Dependancies.Data;
 using UAS.Entity;
 
@@ -22,6 +23,10 @@ namespace UAS.Business
             return _dUsers.getUserInfo(userCode);
         }
 
+        IEnumerable<RS_UserInfo> getAllUsers()
+        {
+            return _dUsers.getAllUsers();
+        }
         public void updateUserInfo(RQ_UserProfile userProfile)
         {
             _dUsers.updateUserInfo(userProfile);
@@ -30,6 +35,16 @@ namespace UAS.Business
         public RS_UserAttendance doUserAttendance(RQ_UserAttendance userAttendance)
         {
             return _dUsers.doUserAttendance(userAttendance);
+        }
+
+        IEnumerable<RS_UserInfo> IUsers.getAllUsers()
+        {
+            return _dUsers.getAllUsers();
+        }
+
+        public IEnumerable<RS_UserAttendanceSummary> getAttendanceSummary(string userCode)
+        {
+            return _dUsers.getAttendanceSummary(userCode);
         }
     }
 }

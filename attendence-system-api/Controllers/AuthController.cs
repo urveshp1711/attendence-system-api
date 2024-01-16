@@ -35,6 +35,7 @@ namespace api_attendance_system.Controllers
                 string token = _jwtHandler.GenerateJWT(request.userCode, "urveshp.1711.purohit@gmail.com", "Admin");
                 res.jwtToken = token;
                 res.userCode = request.userCode;
+                res.userName = isValidLogin.userName;
                 res.profilePic = isValidLogin.profilePic;
                 res.isSuccess = true;
                 return res;

@@ -48,12 +48,14 @@ namespace UAS.Entity
     public class RS_UserProfile
     {
         public string userCode { get; set; }
+        public string? userName { get; set; }
         public string? profilePic { get; set; }
     }
 
     public class RS_UserLogin
     {
         public string userCode { get; set; }
+        public string? userName { get; set; }
         public string? profilePic { get; set; }
         public string jwtToken { get; set; }
         public bool isSuccess { get; set; }
@@ -61,11 +63,23 @@ namespace UAS.Entity
 
     public class RS_UserInfo
     {
-        public string userCode { get; set; }
+        public string? userCode { get; set; }
         public string? userName { get; set; }
         public string? mobile { get; set; }
         public string? email { get; set; }
         public string? profilePic { get; set; }
+    }
+
+    public class RS_UserAttendanceSummary
+    {
+        public string? userCode { get; set; }
+        public string? attendancePic{ get; set; }
+        public string? latitude{ get; set; }
+        public string? longitude{ get; set; }
+        public string? address { get; set; }
+        public string? city{ get; set; }
+        public string? country { get; set; }
+        public DateTime? attendanceDateTime { get; set; }
     }
 
 }

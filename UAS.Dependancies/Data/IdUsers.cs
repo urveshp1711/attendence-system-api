@@ -9,5 +9,7 @@ namespace UAS.Dependancies.Data
         RS_UserInfo? getUserInfo(string userCode);
         void updateUserInfo(RQ_UserProfile userInfo);
         RS_UserAttendance doUserAttendance(RQ_UserAttendance userAttendance);
+        IEnumerable<RS_UserAttendanceSummary> getAttendanceSummary(string userCode);
+        IEnumerable<RS_UserInfo> getAllUsers();
     }
 }
